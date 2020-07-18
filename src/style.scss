@@ -1,3 +1,24 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap');
+
+$background-color: #141414;
+$regular-font-color: #e5e5e5;
+$link-hover-color: #b3b3b3;
+$selected-item-font-color: #fff;
+$green-font-color: #46d369;
+
 body {
   margin: 0;
+  background-color: $background-color;
+  font-family: 'Open Sans', sans-serif;
+}
+
+a {
+  color: $regular-font-color;
+  text-decoration: none;
+  transition: color .4s;
+  font-size: 14px;
+
+  &:hover {
+    color: $link-hover-color;
+  }
 }

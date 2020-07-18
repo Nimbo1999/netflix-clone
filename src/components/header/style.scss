@@ -1,0 +1,66 @@
+.app-header {
+  height: 68px;
+  z-index: 2;
+  background-image: linear-gradient(
+    to bottom,
+    rgba(0,0,0,.7) 10%,rgba(0,0,0,0)
+  );
+  padding: 0 4%;
+  display: flex;
+  align-items: center;
+
+  .logo-container {
+    width: 100%;
+    max-width: 92.5px;
+    margin-right: 25px;
+
+    img {
+      width: 100%;
+    }
+
+  }
+
+  .menu-items {
+    display: flex;
+    list-style: none;
+    flex: 1;
+
+    .item {
+      margin-left: 20px;
+
+      &:first-child {
+        margin: 0;
+      }
+    }
+  }
+
+  .user-menu {
+    display: flex;
+    justify-content: flex-end;
+
+    button {
+      background-color: transparent;
+      color: #fff;
+      font-size: 18px;
+      cursor: pointer;
+      margin: 0 10px;
+      border: none;
+    }
+  }
+
+}
+
+.profile-box {
+  display: flex;
+  justify-content: space-around;
+  font-size: 16px;
+  align-items: center;
+
+  img {
+    margin-right: 7px;
+  }
+
+  svg {
+    margin-bottom: 6px;
+  }
+}
