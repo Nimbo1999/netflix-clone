@@ -13,14 +13,17 @@ const Button = ({ children, type, style }) => {
 };
 
 Button.propTypes = {
-  children: PropTypes.element.isRequired,
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node,
+  ]).isRequired,
   type: PropTypes.oneOf(['button', 'submit', 'reset']),
-  style: PropTypes.objectOf({}),
+  style: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
 };
 
 Button.defaultProps = {
   type: 'button',
-  style: {},
+  style: null,
 };
 
 export default Button;
