@@ -29,3 +29,11 @@ h1 {
   color: $selected-item-font-color;
   font-size: 46px;
 }
+
+.main-spinner-container {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

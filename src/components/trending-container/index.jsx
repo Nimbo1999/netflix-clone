@@ -14,7 +14,13 @@ function useDateFormat(date) {
 
 const Trending = () => {
   return (
-    <div className="trending-container">
+    <div
+      className="trending-container"
+      style={{
+        backgroundImage:
+          'url("http://image.tmdb.org/t/p/w1280/xXBnM6uSTk6qqCf0SRZKXcga9Ba.jpg")',
+      }}
+    >
       <div className="info-trending">
         <div>
           <h1>Greyhound - Na Mira do Inimigo</h1>
@@ -33,7 +39,7 @@ const Trending = () => {
               type="button"
               style={{
                 marginLeft: '20px',
-                backgroundColor: 'rgba(133,133,133,0.6)',
+                backgroundColor: 'rgb(133,133,133)',
                 color: '#fff',
               }}
             >
@@ -46,10 +52,6 @@ const Trending = () => {
           </div>
         </div>
       </div>
-      <img
-        src="http://image.tmdb.org/t/p/w1280/xXBnM6uSTk6qqCf0SRZKXcga9Ba.jpg"
-        alt="Treding"
-      />
     </div>
   );
 };
