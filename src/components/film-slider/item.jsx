@@ -6,17 +6,28 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { selectImageMetaData } from '../../redux/configuration/configuration.selector';
+import { selectGenres } from '../../redux/genres/genres.selector';
 
 import SliderContext from './context';
 
+function useGeners(availableGenres, itemGenres) {
+  const genres = [];
+  itemGenres.forEach((itemG) => {
+    genres.push(availableGenres.filter((genre) => genre.id === itemG).shift());
+  });
+  return genres;
+}
+
 // eslint-disable-next-line react/prop-types
-const Item = ({ movie, ImageMetaData }) => {
+const Item = ({ movie, ImageMetaData, genres }) => {
   const { secure_base_url, backdrop_sizes } = ImageMetaData;
 
   const getSizeItem = (selectSize) => {
     const SizeInArray = backdrop_sizes.filter((size) => size === selectSize);
     return SizeInArray.shift();
   };
+
+  const itemGeners = useGeners(genres, movie.genre_ids);
 
   return (
     <SliderContext.Consumer>
@@ -34,7 +45,13 @@ const Item = ({ movie, ImageMetaData }) => {
             }}
           >
             <div className="item-label">
-              {movie.title}
+              <h4 className="item-title">{movie.title}</h4>
+              <div className="item-genres">
+                {itemGeners.map((genre, i) => {
+                  if (itemGeners.length === i + 1) return `${genre.name}.`;
+                  return `${genre.name}, `;
+                })}
+              </div>
             </div>
           </div>
         );
@@ -52,6 +69,7 @@ Item.propTypes = {
 
 const mapStateToProps = createStructuredSelector({
   ImageMetaData: selectImageMetaData,
+  genres: selectGenres,
 });
 
 export default connect(mapStateToProps)(Item);
