@@ -15,6 +15,7 @@ import { selectGenres } from './redux/genres/genres.selector';
 import Header from './components/header';
 import Trending from './components/trending-container';
 import LoadingSpinner from './components/spinner';
+import Footer from './components/footer';
 
 import './style.scss';
 
@@ -125,6 +126,8 @@ const App = ({
           );
         })}
       </div>
+
+      <Footer />
     </div>
   );
 };
