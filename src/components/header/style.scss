@@ -1,11 +1,7 @@
 .app-header {
   width: 100%;
-  position: absolute;
+  position: fixed;
   z-index: 2;
-  background-image: linear-gradient(
-    to bottom,
-    rgba(0,0,0,.7) 10%,rgba(0,0,0,0)
-  );
 
   nav {
     width: 100%;

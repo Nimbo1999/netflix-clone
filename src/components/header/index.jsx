@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -13,8 +13,26 @@ import NetFlixLogo from '../../assets/netflix-logo.png';
 import './style.scss';
 
 const Header = () => {
+  const [opacity, setOpacity] = useState(0);
+
+  window.onscroll = () => {
+    setOpacity(
+      document.documentElement.scrollTop > 100
+        ? 100
+        : document.documentElement.scrollTop
+    );
+  };
+
   return (
-    <header className="app-header">
+    <header
+      className="app-header"
+      style={{
+        backgroundImage:
+          opacity <= 99
+            ? `linear-gradient(to bottom, rgba(0, 0, 0, .7) 10%,rgba(0, 0, 0, ${opacity / 100 }))`
+            : `linear-gradient(to bottom, rgba(0, 0, 0,  1) 10%,rgba(0,0,0, ${opacity / 100 }))`,
+      }}
+    >
       <nav>
         <div className="logo-container">
           <img src={NetFlixLogo} alt="Netflix Logo" />
