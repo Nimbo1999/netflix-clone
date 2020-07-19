@@ -32,7 +32,11 @@ const Item = ({ movie, ImageMetaData }) => {
               backgroundRepeat: 'no-repeat',
               backgroundSize: 'cover',
             }}
-          />
+          >
+            <div className="item-label">
+              {movie.title}
+            </div>
+          </div>
         );
       }}
     </SliderContext.Consumer>
