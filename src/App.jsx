@@ -1,35 +1,37 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, lazy, Suspense } from 'react';
 
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import { selectMovies } from './redux/movies/movies.selector';
+// import { selectMovies } from './redux/movies/movies.selector';
 import {
   selectApiBaseUrl,
   selectApiKey,
 } from './redux/configuration/configuration.selector';
-import { setMovie } from './redux/movies/movies.actions';
+// import { setMovie } from './redux/movies/movies.actions';
 import { setGenres } from './redux/genres/genres.actions';
 import { setImageMetaData } from './redux/configuration/configuration.actions';
+import { selectGenres } from './redux/genres/genres.selector';
 
 import Header from './components/header';
 import Trending from './components/trending-container';
-import FilmSlider from './components/film-slider';
+// import FilmSlider from './components/film-slider';
 import LoadingSpinner from './components/spinner';
 
 import './style.scss';
 
-const { Item } = FilmSlider;
+const FilmSlider = lazy(() => import('./components/film-slider'));
 
 // eslint-disable-next-line react/prop-types
 const App = ({
-  movies,
-  setMovies,
+  // movies,
+  // setMovies,
   apiBaseUrl,
   apiKey,
   // eslint-disable-next-line no-shadow
   setImageMetaData,
   // eslint-disable-next-line no-shadow
   setGenres,
+  genres,
 }) => {
   useEffect(() => {
     const getInitializeData = async () => {
@@ -58,67 +60,54 @@ const App = ({
       )
         .then((resp) => resp.json())
         .then((data) => {
+          // eslint-disable-next-line no-shadow
           const { genres } = data;
           setGenres(genres);
         });
-
-      await fetch(
-        `${apiBaseUrl}/trending/movie/day?api_key=${apiKey}&language=pt-BR`,
-        {
-          method: 'GET',
-        }
-      )
-        .then((resp) => resp.json())
-        .then((data) => {
-          const { results } = data;
-          setMovies(results);
-        });
     };
-    // getInitializeData ends here.
 
     getInitializeData();
   }, [apiBaseUrl, apiKey]);
 
+  if (genres.length === 0)
+    return (
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          height: '100vh',
+          width: '100%',
+          alignItems: 'center',
+        }}
+      >
+        <LoadingSpinner />
+      </div>
+    );
   return (
     <div>
       <Header />
       <Trending />
 
-      {movies.length === 0 ? (
-        <div className="slider-loading-container">
-          <LoadingSpinner />
-        </div>
-      ) : (
-        <FilmSlider categoryType="Nome da Categoria aqui">
-          {movies.map((movie) => (
-            <Item movie={movie} key={movie.id} />
-          ))}
-        </FilmSlider>
-      )}
-
-      {movies.length === 0 ? (
-        <div className="slider-loading-container">
-          <LoadingSpinner />
-        </div>
-      ) : (
-        <FilmSlider categoryType="Nome da Categoria aqui">
-          {movies.map((movie) => (
-            <Item movie={movie} key={movie.id} />
-          ))}
-        </FilmSlider>
-      )}
+      {genres.map((genre) => {
+        return (
+          <Suspense fallback={<LoadingSpinner />} key={genre.id}>
+            <FilmSlider genre={genre} apiBaseUrl={apiBaseUrl} apiKey={apiKey} />
+          </Suspense>
+        );
+      })}
     </div>
   );
 };
 
 const mapStateToProps = createStructuredSelector({
-  movies: selectMovies,
+  // movies: selectMovies,
   apiBaseUrl: selectApiBaseUrl,
   apiKey: selectApiKey,
+  genres: selectGenres,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  setMovies: (movies) => dispatch(setMovie(movies)),
+  // setMovies: (movies) => dispatch(setMovie(movies)),
   setImageMetaData: (imageObj) => dispatch(setImageMetaData(imageObj)),
   setGenres: (genres) => dispatch(setGenres(genres)),
 });

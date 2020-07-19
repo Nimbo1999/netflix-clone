@@ -5,9 +5,25 @@ import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 
 import './style.scss';
 
-const Spinner = () => {
+const Spinner = ({ elementRef }) => {
+  if (elementRef === undefined)
+    return (
+      <FontAwesomeIcon
+        icon={faCircleNotch}
+        className="spinner"
+        spin
+        size="6x"
+      />
+    );
   return (
-    <FontAwesomeIcon icon={faCircleNotch} className="spinner" spin size="6x" />
+    <div ref={elementRef}>
+      <FontAwesomeIcon
+        icon={faCircleNotch}
+        className="spinner"
+        spin
+        size="6x"
+      />
+    </div>
   );
 };
 
