@@ -21,6 +21,21 @@ import './style.scss';
 
 const FilmSlider = lazy(() => import('./components/film-slider'));
 
+const LoadingSections = () => {
+  return (
+    <div
+      style={{
+        display: 'flex',
+        justifyContent: 'center',
+        width: '100%',
+        height: '400px',
+      }}
+    >
+      <LoadingSpinner />
+    </div>
+  );
+};
+
 // eslint-disable-next-line react/prop-types
 const App = ({
   // movies,
@@ -90,7 +105,7 @@ const App = ({
 
       {genres.map((genre) => {
         return (
-          <Suspense fallback={<LoadingSpinner />} key={genre.id}>
+          <Suspense fallback={<LoadingSections />} key={genre.id}>
             <FilmSlider genre={genre} apiBaseUrl={apiBaseUrl} apiKey={apiKey} />
           </Suspense>
         );
