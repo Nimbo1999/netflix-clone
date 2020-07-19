@@ -1,6 +1,5 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
@@ -58,18 +57,6 @@ const FilmSlider = ({ children, categoryType }) => {
       </div>
     </SliderContext.Provider>
   );
-};
-
-FilmSlider.propTypes = {
-  categoryType: PropTypes.string,
-  children: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.node),
-    PropTypes.node,
-  ]).isRequired,
-};
-
-FilmSlider.defaultProps = {
-  categoryType: '',
 };
 
 FilmSlider.Item = Item;

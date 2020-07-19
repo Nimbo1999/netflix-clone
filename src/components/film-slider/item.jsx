@@ -1,7 +1,6 @@
 /* eslint-disable camelcase */
 /* eslint-disable react/prop-types */
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
@@ -58,13 +57,6 @@ const Item = ({ movie, ImageMetaData, genres }) => {
       }}
     </SliderContext.Consumer>
   );
-};
-
-Item.propTypes = {
-  children: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.node),
-    PropTypes.node,
-  ]).isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({

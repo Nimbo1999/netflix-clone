@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import PropTypes from 'prop-types';
 
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
@@ -27,7 +26,9 @@ const App = ({
   setMovies,
   apiBaseUrl,
   apiKey,
+  // eslint-disable-next-line no-shadow
   setImageMetaData,
+  // eslint-disable-next-line no-shadow
   setGenres,
 }) => {
   useEffect(() => {
@@ -82,6 +83,7 @@ const App = ({
     <div>
       <Header />
       <Trending />
+
       {movies.length === 0 ? (
         <div className="slider-loading-container">
           <LoadingSpinner />
@@ -89,10 +91,11 @@ const App = ({
       ) : (
         <FilmSlider categoryType="Nome da Categoria aqui">
           {movies.map((movie) => (
-            <Item movie={movie} />
+            <Item movie={movie} key={movie.id} />
           ))}
         </FilmSlider>
       )}
+
       {movies.length === 0 ? (
         <div className="slider-loading-container">
           <LoadingSpinner />
@@ -100,7 +103,7 @@ const App = ({
       ) : (
         <FilmSlider categoryType="Nome da Categoria aqui">
           {movies.map((movie) => (
-            <Item movie={movie} />
+            <Item movie={movie} key={movie.id} />
           ))}
         </FilmSlider>
       )}
@@ -119,14 +122,5 @@ const mapDispatchToProps = (dispatch) => ({
   setImageMetaData: (imageObj) => dispatch(setImageMetaData(imageObj)),
   setGenres: (genres) => dispatch(setGenres(genres)),
 });
-
-App.propTypes = {
-  apiBaseUrl: PropTypes.string.isRequired,
-  apiKey: PropTypes.string.isRequired,
-  movies: PropTypes.oneOf([
-    PropTypes.array,
-    PropTypes.arrayOf(PropTypes.object),
-  ]).isRequired,
-};
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
