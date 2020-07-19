@@ -41,13 +41,13 @@ const FilmSlider = ({ children, categoryType }) => {
         <div className="slider-container">
           {hasPrev && (
             <button type="button" className="btn prev" onClick={handlePrev}>
-              <FontAwesomeIcon icon={faChevronLeft} />
+              <FontAwesomeIcon icon={faChevronLeft} size="2x" />
             </button>
           )}
 
           {hasNext && (
             <button type="button" className="btn next" onClick={handleNext}>
-              <FontAwesomeIcon icon={faChevronLeft} rotation={180} />
+              <FontAwesomeIcon icon={faChevronLeft} rotation={180} size="2x" />
             </button>
           )}
 
