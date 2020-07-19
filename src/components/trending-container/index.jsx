@@ -1,7 +1,12 @@
+/* eslint-disable camelcase */
 import React from 'react';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlay, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
+
+import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
+import { selectImageMetaData } from '../../redux/configuration/configuration.selector';
 
 import Button from '../button';
 
@@ -12,24 +17,27 @@ function useDateFormat(date) {
   return `${dateArray[2]}/${dateArray[1]}/${dateArray[0]}`;
 }
 
-const Trending = () => {
+const Trending = ({ movie, imageMetaData }) => {
+  const { backdrop_sizes, secure_base_url } = imageMetaData;
+  const getSizeItem = (selectSize) => {
+    const SizeInArray = backdrop_sizes.filter((size) => size === selectSize);
+    return SizeInArray.shift();
+  };
+
   return (
     <div
       className="trending-container"
       style={{
-        backgroundImage:
-          'url("http://image.tmdb.org/t/p/w1280/xXBnM6uSTk6qqCf0SRZKXcga9Ba.jpg")',
+        backgroundImage: `url("${secure_base_url}${getSizeItem('w1280')}${
+          movie.backdrop_path
+        }")`,
       }}
     >
       <div className="info-trending">
         <div>
-          <h1>Greyhound - Na Mira do Inimigo</h1>
-          <h3>Lançamento em {useDateFormat('2020-07-10')}</h3>
-          <h3>
-            No início da Segunda Guerra Mundial, um inexperiente capitão da
-            Marinha dos EUA deve liderar um comboio aliado sendo perseguido por
-            navios e submarinos nazistas.
-          </h3>
+          <h1>{movie.title}</h1>
+          <h3>Lançamento em {useDateFormat(movie.release_date)}</h3>
+          <h3>{movie.overview}</h3>
           <div>
             <Button type="button">
               <FontAwesomeIcon icon={faPlay} style={{ paddingRight: '10px' }} />
@@ -56,4 +64,8 @@ const Trending = () => {
   );
 };
 
-export default Trending;
+const mapStateToProps = createStructuredSelector({
+  imageMetaData: selectImageMetaData,
+});
+
+export default connect(mapStateToProps)(Trending);

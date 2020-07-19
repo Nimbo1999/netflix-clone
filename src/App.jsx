@@ -2,19 +2,18 @@ import React, { useEffect, lazy, Suspense } from 'react';
 
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-// import { selectMovies } from './redux/movies/movies.selector';
+import { selectFirstMovie } from './redux/movies/movies.selector';
 import {
   selectApiBaseUrl,
   selectApiKey,
 } from './redux/configuration/configuration.selector';
-// import { setMovie } from './redux/movies/movies.actions';
+import { setMovie } from './redux/movies/movies.actions';
 import { setGenres } from './redux/genres/genres.actions';
 import { setImageMetaData } from './redux/configuration/configuration.actions';
 import { selectGenres } from './redux/genres/genres.selector';
 
 import Header from './components/header';
 import Trending from './components/trending-container';
-// import FilmSlider from './components/film-slider';
 import LoadingSpinner from './components/spinner';
 
 import './style.scss';
@@ -38,8 +37,8 @@ const LoadingSections = () => {
 
 // eslint-disable-next-line react/prop-types
 const App = ({
-  // movies,
-  // setMovies,
+  movie,
+  setMovies,
   apiBaseUrl,
   apiKey,
   // eslint-disable-next-line no-shadow
@@ -65,6 +64,19 @@ const App = ({
             secure_base_url,
             backdrop_sizes,
           });
+        });
+
+      await fetch(
+        `${apiBaseUrl}/trending/movie/day?api_key=${apiKey}&language=pt-BR`,
+        {
+          method: 'GET',
+        }
+      )
+        .then((resp) => resp.json())
+        .then((data) => {
+          // eslint-disable-next-line no-shadow
+          const { results } = data;
+          setMovies(results);
         });
 
       await fetch(
@@ -101,28 +113,31 @@ const App = ({
   return (
     <div>
       <Header />
-      <Trending />
 
-      {genres.map((genre) => {
-        return (
-          <Suspense fallback={<LoadingSections />} key={genre.id}>
-            <FilmSlider genre={genre} apiBaseUrl={apiBaseUrl} apiKey={apiKey} />
-          </Suspense>
-        );
-      })}
+      {movie ? <Trending movie={movie} /> : <LoadingSections />}
+
+      <div style={{ marginTop: '-100px' }}>
+        {genres.map((genre) => {
+          return (
+            <Suspense fallback={<LoadingSections />} key={genre.id}>
+              <FilmSlider genre={genre} apiBaseUrl={apiBaseUrl} apiKey={apiKey} />
+            </Suspense>
+          );
+        })}
+      </div>
     </div>
   );
 };
 
 const mapStateToProps = createStructuredSelector({
-  // movies: selectMovies,
+  movie: selectFirstMovie,
   apiBaseUrl: selectApiBaseUrl,
   apiKey: selectApiKey,
   genres: selectGenres,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  // setMovies: (movies) => dispatch(setMovie(movies)),
+  setMovies: (movies) => dispatch(setMovie(movies)),
   setImageMetaData: (imageObj) => dispatch(setImageMetaData(imageObj)),
   setGenres: (genres) => dispatch(setGenres(genres)),
 });
