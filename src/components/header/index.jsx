@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -40,7 +41,7 @@ const Header = () => {
 
         <ul className="menu-items">
           <li className="item">
-            <a href="/">Início</a>
+            <Link to="/">Início</Link>
           </li>
           <li className="item">
             <a href="/">Séries</a>

@@ -1,6 +1,9 @@
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable camelcase */
 /* eslint-disable react/prop-types */
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
@@ -25,6 +28,7 @@ const Item = ({ movie, ImageMetaData, genres, elementRef }) => {
   };
 
   const itemGeners = useGeners(genres, movie.genre_ids);
+  const history = useHistory();
 
   return (
     <div
@@ -37,6 +41,7 @@ const Item = ({ movie, ImageMetaData, genres, elementRef }) => {
         backgroundRepeat: 'no-repeat',
         backgroundSize: 'cover',
       }}
+      onClick={() => history.push(`/movie/${movie.id}`)}
     >
       <h5 className="slide-item-title">
         {movie.title.length > 35

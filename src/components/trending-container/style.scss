@@ -12,10 +12,10 @@
 .info-trending {
   display: flex;
   flex-direction: row;
-  height: 400px;
+  height: min-content;
   position: absolute;
   left: 0;
-  padding: 0 4%;
+  padding: 30px 4%;
   background-color: rgba(0, 0, 0, 0.3);
   border-radius: 0px 20px 20px 0px;
   border-width: 3px 3px 3px 0px;

@@ -2,6 +2,7 @@ import { lazy } from 'react';
 
 const HomePage = lazy(() => import('./pages/homepage'));
 const Page404 = lazy(() => import('./pages/404'));
+const MoviePage = lazy(() => import('./pages/movie-page'));
 
 export default [
   {
@@ -9,6 +10,11 @@ export default [
     path: '/',
     component: HomePage,
     exact: true,
+  },
+  {
+    key: 'moviepage',
+    path: '/movie/:id',
+    component: MoviePage,
   },
   {
     key: 'notfoundpage',

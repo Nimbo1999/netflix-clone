@@ -93,17 +93,16 @@ const App = ({
     <div>
       <Header />
 
-      <Switch>
-        <Suspense fallback={loadingComponent}>
-          {routes.map((route) => (
-            <Route
-              path={`${baseUrl}${route.path}`}
-              {...route}
-              key={route.key}
-            />
-          ))}
-        </Suspense>
-      </Switch>
+      <Suspense fallback={loadingComponent}>
+        <Switch>
+          {routes.map((route) => {
+            const { path } = route;
+            return (
+              <Route path={`${baseUrl}${path}`} {...route} key={route.key} />
+            );
+          })}
+        </Switch>
+      </Suspense>
 
       <Footer />
     </div>
