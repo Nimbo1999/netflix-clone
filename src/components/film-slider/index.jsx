@@ -13,6 +13,8 @@ const FilmSlider = ({ genre, apiBaseUrl, apiKey }) => {
   const [distance, setDistance] = useState(0);
   const [moviesOfGenrer, setMovies] = useState([]);
   const [width, setWidth] = useState(0);
+  const [listItemWidth, setListItemWidth] = useState(0);
+  const containerRef = useRef(null);
   const elementRef = useRef(null);
 
   useEffect(() => {
@@ -26,15 +28,19 @@ const FilmSlider = ({ genre, apiBaseUrl, apiKey }) => {
           const { results } = data;
           // console.log(results)
           setMovies(results);
-          setWidth(elementRef.current.clientWidth);
+          setWidth(containerRef.current.clientWidth);
         })
         .catch(() => {
           return [];
         });
     };
 
+    if (elementRef.current) {
+      setListItemWidth(elementRef.current.clientWidth);
+    }
+
     getListOfFilms();
-  }, []);
+  }, [elementRef.current]);;
 
   return (
     <div className="film-slider-container">
@@ -53,24 +59,26 @@ const FilmSlider = ({ genre, apiBaseUrl, apiKey }) => {
           </button>
         )}
 
-        <button
-          type="button"
-          className="btn next"
-          onClick={() => setDistance(distance - width)}
-        >
-          <FontAwesomeIcon icon={faChevronLeft} rotation={180} size="2x" />
-        </button>
+        {distance <= -listItemWidth * 20 ? null : (
+          <button
+            type="button"
+            className="btn next"
+            onClick={() => setDistance(distance - width)}
+          >
+            <FontAwesomeIcon icon={faChevronLeft} rotation={180} size="2x" />
+          </button>
+        )}
 
         {moviesOfGenrer.length === 0 ? (
           <Loading />
         ) : (
           <div
             className="slider"
-            ref={elementRef}
+            ref={containerRef}
             style={{ transform: `translate3d(${distance}px, 0, 0)` }}
           >
             {moviesOfGenrer.map((movie) => (
-              <Item movie={movie} key={movie.id} />
+              <Item movie={movie} key={movie.id} elementRef={elementRef} />
             ))}
           </div>
         )}

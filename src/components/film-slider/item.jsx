@@ -16,7 +16,7 @@ function useGeners(availableGenres, itemGenres) {
 }
 
 // eslint-disable-next-line react/prop-types
-const Item = ({ movie, ImageMetaData, genres }) => {
+const Item = ({ movie, ImageMetaData, genres, elementRef }) => {
   const { secure_base_url, backdrop_sizes } = ImageMetaData;
 
   const getSizeItem = (selectSize) => {
@@ -28,6 +28,7 @@ const Item = ({ movie, ImageMetaData, genres }) => {
 
   return (
     <div
+      ref={elementRef}
       className="slide-item"
       style={{
         backgroundImage: `url("${secure_base_url}${getSizeItem('w300')}${

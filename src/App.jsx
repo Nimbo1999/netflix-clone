@@ -1,8 +1,8 @@
-import React, { useEffect, lazy, Suspense } from 'react';
+import React, { useEffect, useState, Suspense } from 'react';
+import { Route, Switch } from 'react-router-dom';
 
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import { selectFirstMovie } from './redux/movies/movies.selector';
 import {
   selectApiBaseUrl,
   selectApiKey,
@@ -10,35 +10,25 @@ import {
 import { setMovie } from './redux/movies/movies.actions';
 import { setGenres } from './redux/genres/genres.actions';
 import { setImageMetaData } from './redux/configuration/configuration.actions';
-import { selectGenres } from './redux/genres/genres.selector';
+
+import routes from './routes';
 
 import Header from './components/header';
-import Trending from './components/trending-container';
-import LoadingSpinner from './components/spinner';
 import Footer from './components/footer';
+import LoadingComponent from './components/spinner';
 
 import './style.scss';
 
-const FilmSlider = lazy(() => import('./components/film-slider'));
+const loadingComponent = (
+  <div className="main-spinner-container">
+    <LoadingComponent />
+  </div>
+);
 
-const LoadingSections = () => {
-  return (
-    <div
-      style={{
-        display: 'flex',
-        justifyContent: 'center',
-        width: '100%',
-        height: '400px',
-      }}
-    >
-      <LoadingSpinner />
-    </div>
-  );
-};
+const baseUrl = process.env.PUBLIC_URL;
 
 // eslint-disable-next-line react/prop-types
 const App = ({
-  movie,
   setMovies,
   apiBaseUrl,
   apiKey,
@@ -46,8 +36,8 @@ const App = ({
   setImageMetaData,
   // eslint-disable-next-line no-shadow
   setGenres,
-  genres,
 }) => {
+  const [pageLoaded, completeLoading] = useState(false);
   useEffect(() => {
     const getInitializeData = async () => {
       await fetch(`${apiBaseUrl}/configuration?api_key=${apiKey}`, {
@@ -95,37 +85,25 @@ const App = ({
     };
 
     getInitializeData();
-  }, [apiBaseUrl, apiKey]);
+    if (!pageLoaded) completeLoading(!pageLoaded);
+  }, [apiBaseUrl, apiKey, completeLoading, pageLoaded]);
 
-  if (genres.length === 0)
-    return (
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'center',
-          height: '100vh',
-          width: '100%',
-          alignItems: 'center',
-        }}
-      >
-        <LoadingSpinner />
-      </div>
-    );
+  if (!pageLoaded) return loadingComponent;
   return (
     <div>
       <Header />
 
-      {movie ? <Trending movie={movie} /> : <LoadingSections />}
-
-      <div style={{ marginTop: '-100px' }}>
-        {genres.map((genre) => {
-          return (
-            <Suspense fallback={<LoadingSections />} key={genre.id}>
-              <FilmSlider genre={genre} apiBaseUrl={apiBaseUrl} apiKey={apiKey} />
-            </Suspense>
-          );
-        })}
-      </div>
+      <Switch>
+        <Suspense fallback={loadingComponent}>
+          {routes.map((route) => (
+            <Route
+              path={`${baseUrl}${route.path}`}
+              {...route}
+              key={route.key}
+            />
+          ))}
+        </Suspense>
+      </Switch>
 
       <Footer />
     </div>
@@ -133,10 +111,8 @@ const App = ({
 };
 
 const mapStateToProps = createStructuredSelector({
-  movie: selectFirstMovie,
   apiBaseUrl: selectApiBaseUrl,
   apiKey: selectApiKey,
-  genres: selectGenres,
 });
 
 const mapDispatchToProps = (dispatch) => ({
