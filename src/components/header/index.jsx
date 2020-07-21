@@ -104,8 +104,9 @@ const Header = ({ searchText, setSearchText, fetchMoviesStart, loading }) => {
               className="input-search"
               value={searchText}
               onChange={(e) => {
-                setSearchText(e.target.value);
-                fetchMoviesStart();
+                const VALUE = e.target.value;
+                setSearchText(VALUE);
+                if (VALUE !== '') fetchMoviesStart();
                 if (pathname !== '/search') history.push('/search');
               }}
               style={{ maxWidth: searching ? '200px' : '0px' }}
