@@ -40,7 +40,31 @@
       display: flex;
       justify-content: flex-end;
       padding-right: 4%;
+      align-items: center;
   
+      .search-container {
+        border-width: 1px;
+        border-radius: 3px;
+        border-style: solid;
+        color: #fff;
+        transition: background-color 0.2s, border-color 0.2s;
+
+        button {
+          margin: 0px 5px;
+        }
+
+        .input-search {
+          padding: 10px 0px;
+          background: transparent;
+          border-style: none;
+          font-size: 14px;
+          color: #fff;
+          width: 100%;
+          transition: max-width 0.2s;
+
+        }
+      }
+
       button {
         background-color: transparent;
         color: #fff;
@@ -48,7 +72,13 @@
         cursor: pointer;
         margin: 0 10px;
         border: none;
+
+        &:disabled {
+          opacity: 0.6;
+          cursor: not-allowed;
+        }
       }
+
     }
   }
 

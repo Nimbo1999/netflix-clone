@@ -12,3 +12,16 @@
     opacity: 0.7;
   }
 }
+
+.button-link {
+  background-color: transparent;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  transition: color .4s, transform .2s;
+
+  &:hover {
+    color: #ee0021;
+    transform: scale(1.1);
+  }
+}

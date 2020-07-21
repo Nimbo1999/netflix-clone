@@ -40,7 +40,7 @@ const FilmSlider = ({ genre, apiBaseUrl, apiKey }) => {
     }
 
     getListOfFilms();
-  }, [elementRef.current]);;
+  }, [elementRef.current]);
 
   return (
     <div className="film-slider-container">
@@ -77,9 +77,11 @@ const FilmSlider = ({ genre, apiBaseUrl, apiKey }) => {
             ref={containerRef}
             style={{ transform: `translate3d(${distance}px, 0, 0)` }}
           >
-            {moviesOfGenrer.map((movie) => (
-              <Item movie={movie} key={movie.id} elementRef={elementRef} />
-            ))}
+            {moviesOfGenrer
+              .filter((result) => result.backdrop_path !== null)
+              .map((movie) => (
+                <Item movie={movie} key={movie.id} elementRef={elementRef} />
+              ))}
           </div>
         )}
       </div>
