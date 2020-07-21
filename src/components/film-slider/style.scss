@@ -45,7 +45,7 @@
       transition: transform 300ms ease 100ms;
 
       .slide-item {
-        flex: 0 0 19.5%;
+        flex: 0 0 300px;
         margin: 0 3px;
         transition: transform 300ms ease 100ms;
         height: 100%;
@@ -109,6 +109,38 @@
   &:hover {
     .btn {
       opacity: 1 !important;
+    }
+  }
+
+  @media screen and (max-width: 418px) {
+    .slider-container {
+      height: 100px;
+
+      .btn {
+        opacity: 1;
+      }
+
+      .slider {
+        .slide-item {
+          flex: 0 0 200px;
+        }
+      }
+    }
+  }
+
+  @media screen and (max-width: 1000px) {
+    .slider-container {
+      height: 110px;
+
+      .btn {
+        opacity: 0;
+      }
+
+      .slider {
+        .slide-item {
+          flex: 0 0 240px;
+        }
+      }
     }
   }
 }

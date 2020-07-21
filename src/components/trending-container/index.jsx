@@ -67,7 +67,7 @@ const Trending = ({ movie, imageMetaData, isMoviePage }) => {
               </p>
             </div>
           ) : (
-            <div>
+            <div className="buttons-tranding">
               <Button type="button">
                 <FontAwesomeIcon
                   icon={faPlay}
