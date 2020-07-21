@@ -4,6 +4,7 @@ const HomePage = lazy(() => import('./pages/homepage'));
 const Page404 = lazy(() => import('./pages/404'));
 const MoviePage = lazy(() => import('./pages/movie-page'));
 const SearchPage = lazy(() => import('./pages/search-page'));
+const MostRecent = lazy(() => import('./pages/most-recent'));
 
 export default [
   {
@@ -21,6 +22,11 @@ export default [
     key: 'searchpage',
     path: '/search',
     component: SearchPage,
+  },
+  {
+    key: 'mostrecent',
+    path: '/recents',
+    component: MostRecent,
   },
   {
     key: 'notfoundpage',

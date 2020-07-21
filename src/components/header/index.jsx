@@ -68,7 +68,7 @@ const Header = ({ searchText, setSearchText, fetchMoviesStart, loading }) => {
             <Link to="/">Início</Link>
           </li>
           <li className="item">
-            <a href="/">Mais recentes</a>
+            <Link to="/recents">Mais recentes</Link>
           </li>
         </ul>
 

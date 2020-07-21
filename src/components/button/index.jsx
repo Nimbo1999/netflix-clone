@@ -3,11 +3,16 @@ import React from 'react';
 
 import './style.scss';
 
-const Button = ({ children, type, style, onClick, link }) => {
+const Button = ({ children, type, style, onClick, link, active }) => {
   if (link)
     return React.createElement(
       'button',
-      { type, className: 'button-link', style, onClick },
+      {
+        type,
+        className: `button-link${active ? ' active' : ''}`,
+        style,
+        onClick,
+      },
       children
     );
   return React.createElement(
